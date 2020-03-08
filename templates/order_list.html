@@ -1,0 +1,108 @@
+{% extends 'base.html'%}
+{% block content_title %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <nav class="nav nav-pills flex-column flex-sm-row">
+        <a class="flex-sm-fill text-sm-center nav-link active" href="/logout/">Wyloguj</a>
+        <a class="flex-sm-fill text-sm-center nav-link active" href="/home/">Panel administracyjny</a>
+            <li class="flex-sm-fill text-sm-center nav-link active">
+
+                <div class="container" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Moj Warsztat
+                </div>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/edit_user/">Edytuj dane</a>
+                    <a class="dropdown-item" href="/edit_workshop/">Edytuj dane warsztatu</a>
+                    <a class="dropdown-item" href="/add_mechanic/">Dodaj mechanika</a>
+                </div>
+
+            </li>
+            <li class="flex-sm-fill text-sm-center nav-link active">
+                <div class="container" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Zlecenia
+                </div>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/add_order/">Nowe zlecenie</a>
+                    <a class="dropdown-item" href="/order_list/{{ user_id }}">lista zadań</a>
+                </div>
+            </li>
+        </nav>
+    </div>
+    {% if messages %}
+    <div class="container">
+        <div class="d-flex justify-content-left">
+          <div class="alert alert-danger" role="alert">
+            {% for message in messages %}
+              <span class="{{ messages.error }}">{{ message }}</span>
+            {% endfor %}
+          </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <form method="post">
+    {% csrf_token %}
+
+
+        <div class="container">
+            <div class=table-responsive">
+                <table class="table table-striped table-dark">
+                    <thead>
+                        <tr>
+                            <th scope="col">Numer zamówienia</th>
+                            <th scope="col">Mechanik</th>
+                            <th scope="col">Data przyjęcia</th>
+                            <th scope="col">Data rozpoczęcia</th>
+                            <th scope="col">Data zakończenia</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Przejdź do zamówienia</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for order in orders.object_list %}
+
+                        <tr>
+                            <th scope="row">{{ order.number }}</th>
+                            <td>{{ order.mechanic|default:"-------"}}</td>
+                            <td>{{ order.date_added }}</td>
+                            <td>{{ order.start_date|default:"-------" }}</td>
+                            <td>{{ order.end_date|default:"-------" }}</td>
+                            <td>{{ order.get_order_status_display }}</td>
+                            <td><a href='/edit_order/{{ order.number }}' >Przejdź do zamówienia</a> </td>
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="container">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+
+                    {% if orders.has_previous %}
+
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ orders.previous_page_number }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                                </a>
+                                    </li>
+                                    {% endif %}
+                                    {% if orders.has_next %}
+                                    <li class="page-item">
+                                <a class="page-link" href="?page={{ orders.next_page_number }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </form>
+{% endblock %}

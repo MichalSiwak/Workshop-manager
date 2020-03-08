@@ -1,0 +1,85 @@
+{% extends 'base.html'%}
+{% block content_title %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <nav class="nav nav-pills flex-column flex-sm-row">
+        <a class="flex-sm-fill text-sm-center nav-link active" href="/logout/">Wyloguj</a>
+        <a class="flex-sm-fill text-sm-center nav-link active" href="/home/">Panel administracyjny</a>
+            <li class="flex-sm-fill text-sm-center nav-link active">
+
+                <div class="container" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Moj Warsztat
+                </div>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/edit_user/">Edytuj dane</a>
+                    <a class="dropdown-item" href="/edit_workshop/">Edytuj dane warsztatu</a>
+                    <a class="dropdown-item" href="/add_mechanic/">Dodaj mechanika</a>
+                </div>
+
+            </li>
+            <li class="flex-sm-fill text-sm-center nav-link active">
+                <div class="container" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Zlecenia
+                </div>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/add_order/">Nowe zlecenie</a>
+                    <a class="dropdown-item" href="/order_list/{{ user_id }}">Lista zadań</a>
+                </div>
+            </li>
+        </nav>
+    </div>
+        {% if messages %}
+        <div class="container">
+            <div class="d-flex justify-content-left">
+              <div class="alert alert-danger" role="alert">
+                {% for message in messages %}
+                  <span class="{{ messages.error }}">{{ message }}</span>
+                {% endfor %}
+              </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <form method="post">
+    {% csrf_token %}
+        <div class="container">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <div class="container">
+                        <span class="btn btn-secondary btn-lg" id="basic-addon1">
+                            <h5>Dane warsztatu</h5>
+                            {{ work.as_p}}
+                            <div class="container">
+                                <input type="submit" class="btn btn-secondary btn-lg" name ="edit" value="Zapisz">
+                            </div>
+                        </span>
+                    </div>
+                    <div class="container">
+                        <span class="btn btn-secondary btn-lg" id="basic-addon1">
+                            <h5>Lista mechaników:</h5>
+                            {% for mechanik in mechaniks %}
+                            <nav class="navbar navbar-light bg-light">
+                                <a class="nav-link" href="/edit_mechanic/{{ mechanik.id }}"> {{ mechanik|default:"Brak dodanych pracwników" }} </a>
+                            </nav>
+                            {% endfor %}
+
+                        </span>
+                    </div>
+                    <div class="container">
+                        <span class="btn btn-secondary btn-lg" id="basic-addon1">
+                            <h5>Stanowiska:</h5>
+                            <a> {{ positions }} </a>
+                            <div>
+                                <input type="submit" class="btn btn-secondary btn-lg" name ="add" value="+">
+                                <input type="submit" class="btn btn-secondary btn-lg" name="delete" value="-">
+                            </div>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}

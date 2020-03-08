@@ -1,0 +1,7 @@
+/venv
+
+templates/test.html
+
+car_mechanic/view_ok.py
+
+/mechanics/local_settings.py

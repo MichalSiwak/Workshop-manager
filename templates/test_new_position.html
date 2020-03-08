@@ -1,0 +1,44 @@
+{% extends 'base.html'%}
+{% block content_title %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <nav class="nav nav-pills flex-column flex-sm-row">
+        <a class="flex-sm-fill text-sm-center nav-link active" href="/logout/">Wyloguj</a>
+        <a class="flex-sm-fill text-sm-center nav-link active" href="/home/">Panel administracyjny</a>
+            <li class="flex-sm-fill text-sm-center nav-link active">
+
+                <div class="container" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Moj Warsztat
+                </div>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/edit_user/">Edytuj dane</a>
+                    <a class="dropdown-item" href="/edit_workshop/">Edytuj dane warsztatu</a>
+                    <a class="dropdown-item" href="/add_mechanic/">Dodaj mechanika</a>
+                </div>
+
+            </li>
+            <li class="flex-sm-fill text-sm-center nav-link active">
+                <div class="container" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Zlecenia
+                </div>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/add_order/">Nowe zlecenie</a>
+                    <a class="dropdown-item" href="/order_list/{{ user_id }}">lista zadań</a>
+                </div>
+            </li>
+        </nav>
+    </div>
+    </form>
+{% endblock %}
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <div class="btn btn-secondary btn-lg" id="basic-addon1">
+                        <div>
+                        </div>
+                    </div>
+                </div>
+            </div>

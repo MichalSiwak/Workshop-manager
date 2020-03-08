@@ -1,0 +1,22 @@
+version: '2'
+
+volumes:
+  local_postgres_data: {}
+
+services:
+  django:
+       build:
+        context: .
+        dockerfile: Dockerfile_django
+     depends_on:
+       - postgres
+     volumes:
+       - .:/app
+     ports:
+       - "8000:8000"
+     command: python manage.py runserver 0.0.0.0:8000
+
+  postgres:
+     image: postgres:latest
+     volumes:
+       - local_postgres_data:/var/lib/postgresql/data

@@ -1,0 +1,31 @@
+{% extends 'base.html'%}
+{% block content_title %}
+{% endblock %}
+{% block content %}
+    <form method="post">
+    {% csrf_token %}
+     <div class="container">
+        <nav class="nav nav-pills flex-column flex-sm-row">
+          <a class="flex-sm-fill text-sm-center nav-link active" href="/">Strona główna</a>
+          <a class="flex-sm-fill text-sm-center nav-link active" href="/login/">Logowanie</a>
+          <a class="flex-sm-fill text-sm-center nav-link active" href="/register">Rejestracja</a>
+          <a class="flex-sm-fill text-sm-center nav-link active" href="/about">O nas</a>
+          <a class="flex-sm-fill text-sm-center nav-link active" href="/contact">Kontakt</a>
+        </nav>
+    </div>
+        {% if messages %}
+        <div class="container">
+            <div class="d-flex justify-content-left">
+              <div class="alert alert-danger" role="alert">
+                {% for message in messages %}
+                  <span class="{{ message.tags }}">{{ message }}</span>
+                {% endfor %}
+              </div>
+            </div>
+        </div>
+    {% endif %}
+    </form>
+{% endblock %}
+
+
+
